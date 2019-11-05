@@ -425,13 +425,15 @@ public class SJSwiftSideMenuController: UIViewController, UINavigationController
     {
         SJSwiftSideMenuController.validateForLeftMenuSetup()
         
-        switch gesture.direction {
-        case UISwipeGestureRecognizer.Direction.right:
-            SJSwiftSideMenuController.showLeftMenu()
-        case UISwipeGestureRecognizer.Direction.left:
-            SJSwiftSideMenuController.hideLeftMenu()
-        default:
-            SJSwiftSideMenuController.hideLeftMenu()
+        if let swipeGesture = gesture as UISwipeGestureRecognizer? {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.right:
+                SJSwiftSideMenuController.showLeftMenu()
+            case UISwipeGestureRecognizer.Direction.left:
+                SJSwiftSideMenuController.hideLeftMenu()
+            default:
+                SJSwiftSideMenuController.hideLeftMenu()
+            }
         }
         if SJSwiftSideMenuController.leftSideMenuController != nil {
             SJSwiftSideMenuController.leftSideMenuController .viewWillAppear(true)
@@ -582,13 +584,15 @@ public class SJSwiftSideMenuController: UIViewController, UINavigationController
     {
         SJSwiftSideMenuController.validateForRightMenuSetup()
         
-        switch gesture.direction {
-        case UISwipeGestureRecognizer.Direction.right:
-            SJSwiftSideMenuController.hideRightMenu()
-        case UISwipeGestureRecognizer.Direction.left:
-            SJSwiftSideMenuController.showRightMenu()
-        default:
-            SJSwiftSideMenuController.hideRightMenu()
+        if let swipeGesture = gesture as UISwipeGestureRecognizer? {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.right:
+                SJSwiftSideMenuController.hideRightMenu()
+            case UISwipeGestureRecognizer.Direction.left:
+                SJSwiftSideMenuController.showRightMenu()
+            default:
+                SJSwiftSideMenuController.hideRightMenu()
+            }
         }
     }
     private static func showRightMenuOver() {
@@ -690,7 +694,7 @@ public class SJSwiftSideMenuController: UIViewController, UINavigationController
             SJSwiftSideMenuController.validateForNavigationSetup() //Check for setup
             var vcList = SJSwiftSideMenuController.viewControllers
             if vcList.contains(viewController) == true {
-                let index = vcList.firstIndex(of: viewController)
+                let index = vcList.index(of: viewController)
                 vcList.remove(at: index!)
                 SJSwiftSideMenuController.navigator.viewControllers = vcList
             }
